@@ -77,5 +77,11 @@
 		height: 42px;
 		width: 100%;
 		margin: 0 auto;
+		padding: 10px 0;
+		line-height: 24px;
+		text-align: center;
+		background-color: #eee;
+		color: #666;
+		font-weight: 300;
 	}
 </style>
