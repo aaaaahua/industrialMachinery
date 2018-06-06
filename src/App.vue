@@ -1,4 +1,4 @@
-<template>
+ <template>
 	<div id="app" class="common">
 		<nav>
 			<img src="./logo.gif" class="logoPos">
@@ -10,7 +10,7 @@
 						<template slot="title">
 							{{item.title}}
 						</template>
-						<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
+						<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title" :key="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
 					</Submenu>
 				</div>
 			</Menu>
