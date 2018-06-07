@@ -11,6 +11,7 @@ export default new Router({
   routes: [
     {
 			path: '/',
+//			path: '/Admin/',
 			component: App,
 			children: [
 				{ path: 'article/', component: Article },
@@ -19,6 +20,7 @@ export default new Router({
     },
     {
     	path: '/Admin/',
+//  	path: '/',
 			component: Admin,
 			children: [
 				{ path: 'adminArticle/', component: AdminArticle },
