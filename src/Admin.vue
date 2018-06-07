@@ -68,11 +68,11 @@
 	.adminNavbar {
 		height: 95%;
 		float: left;
+		width: 12%!important;
 	}
 	
 	.adminContent {
 		float: left;
-
-		width: 80%;
+		width: 88%;
 	}
 </style>
