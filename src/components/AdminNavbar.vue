@@ -15,7 +15,11 @@
 
 			<Table border :columns="columns2" :data="navList2"></Table>
 		</div>
+		<Modal v-model="modal1" title="删除提示" @on-ok="DelSure" @on-cancel="Delcancel">
+			<p>确认删除？</p>
+		</Modal>
 	</div>
+
 </template>
 <script>
 	export default {
@@ -26,7 +30,8 @@
 				columns1: [],
 				columns2: [],
 				activeNav: null, // 当前激活的一级菜单
-				idArr: [],
+				modal1: false,
+				CurrData: [],
 			}
 		},
 		mounted() {
@@ -52,20 +57,26 @@
 				this.data6.splice(index, 1);
 			},
 			btnDel(CurrData) {
-				this.$http.delete("api/nav/del?id="+CurrData.id).then((res) => {
+				this.modal1 = true;
+				this.CurrData = CurrData;
+
+			},
+			DelSure() {
+				this.$http.delete("api/nav/del?id=" + this.CurrData.id).then((res) => {
 					var result = res.body;
 					if(result) {
+						let newNavList = this.navList1.filter((value) => {
+							return value.id != this.CurrData.id;
+						});
+						this.navList1 = newNavList;
 						this.$Message.error("删除成功");
 					} else {
 						this.$Message.error("网络异常");
 					}
 				});
-
-				let newNavList = this.navList1.filter((value) => {
-					return value.id != CurrData.id;
-				})
-
-				this.navList1 = newNavList;
+			},
+			Delcancel() {
+				this.$Message.info('已取消删除');
 			},
 			initColumn() {
 				// 一级导航表格
@@ -153,6 +164,7 @@
 										click: () => {
 											// TODO 删除按钮
 											this.btnDel(params.row);
+
 										}
 									}
 								}, '删除')
