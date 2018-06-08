@@ -3,7 +3,7 @@
 		<h2 class="title-header">导航栏管理 <small> —— Navigation Manager</small></h2>
 		<br>
 		<div>
-			<Button type="primary">新增</Button>
+			<Button type="primary" @click="addNavbar = true">新增</Button>
 		</div>
 		<br>
 		<Table border :columns="columns1" :data="navList1"></Table>
@@ -15,7 +15,29 @@
 
 			<Table border :columns="columns2" :data="navList2"></Table>
 		</div>
-		<Modal v-model="modal1" title="删除提示" @on-ok="DelSure" @on-cancel="Delcancel">
+
+		<!--增加导航栏模态框-->
+		<Modal v-model="addNavbar" title="新增导航栏" @on-ok="AddSure" @on-cancel="cancel">
+			<Form :model="addNavForm" label-position="left" :label-width="100">
+				<FormItem label="名称">
+					<Input v-model="addNavForm.title"></Input>
+				</FormItem>
+				<FormItem label="跳转">
+					<RadioGroup v-model="genders">
+						<Radio label="male">否</Radio>
+						<Radio label="female">是</Radio>
+					</RadioGroup>
+					<Input v-model="addNavForm.input3" style="width: 66%;float: right;" placeholder="url地址"></Input>
+				</FormItem>
+				<FormItem label="二级菜单">
+					<Input v-model="addNavForm.input3"></Input>
+				</FormItem>
+			</Form>
+
+		</Modal>
+
+		<!--//删除模态框-->
+		<Modal v-model="comfirmDel" title="删除提示" @on-ok="DelSure" @on-cancel="cancel">
 			<p>确认删除？</p>
 		</Modal>
 	</div>
@@ -25,13 +47,21 @@
 	export default {
 		data() {
 			return {
+				addNavForm: {
+					title: '',
+					input2: '',
+					input3: ''
+				},
+				isHref: false,
 				navList1: [],
 				navList2: [],
 				columns1: [],
 				columns2: [],
 				activeNav: null, // 当前激活的一级菜单
-				modal1: false,
+				comfirmDel: false,
 				CurrData: [],
+				addNavbar: false,
+				genders: '',
 			}
 		},
 		mounted() {
@@ -56,8 +86,11 @@
 			remove(index) {
 				this.data6.splice(index, 1);
 			},
+			AddSure() {
+
+			},
 			btnDel(CurrData) {
-				this.modal1 = true;
+				this.comfirmDel = true;
 				this.CurrData = CurrData;
 
 			},
@@ -75,8 +108,8 @@
 					}
 				});
 			},
-			Delcancel() {
-				this.$Message.info('已取消删除');
+			cancel() {
+				this.$Message.info('已取消操作');
 			},
 			initColumn() {
 				// 一级导航表格
