@@ -2,13 +2,17 @@
 	<div class="admin-content">
 		<h2 class="title-header">导航栏管理 <small> —— Navigation Manager</small></h2>
 		<br>
+		<div>
+			<Button type="primary">新增</Button>
+		</div>
+		<br>
 		<Table border :columns="columns1" :data="navList1"></Table>
 
 		<br><br><br>
 
 		<div v-if="activeNav">
 			<b> "{{activeNav.title}}" 下的二级导航栏菜单: </b>
-		
+
 			<Table border :columns="columns2" :data="navList2"></Table>
 		</div>
 	</div>
@@ -21,14 +25,14 @@
 				navList2: [],
 				columns1: [],
 				columns2: [],
-				activeNav : null,		// 当前激活的一级菜单
+				activeNav: null, // 当前激活的一级菜单
+				allTitles: [],
 			}
 		},
 		mounted() {
 			this.initColumn();
 
 			this.$http.get("api/nav/all").then((res) => {
-
 				var result = res.body;
 				if(result) {
 					this.navList1 = result;
@@ -47,14 +51,28 @@
 			remove(index) {
 				this.data6.splice(index, 1);
 			},
-			initColumn(){
+			btnDel(CurrData) {
+				this.$http.delete("api/nav/del?id="+CurrData.id).then((res) => {
+					var result = res.body;
+					if(result) {
+						this.navList1 = result;
+					} else {
+						this.$Message.error("网络异常");
+					}
+				});
+				this.navList1.forEach((value) => {
+					this.allTitles.push(value.title);
+				})
+				let index_ = this.allTitles.indexOf(CurrData.title);
+				this.navList1.splice(index_, 1);
+			},
+			initColumn() {
 				// 一级导航表格
-				this.columns1 = [
-					{
-                        type: 'index',
-                        width: 60,
-                        align: 'center'
-                    },
+				this.columns1 = [{
+						type: 'index',
+						width: 60,
+						align: 'center'
+					},
 					{
 						title: '名称',
 						key: 'title',
@@ -93,13 +111,13 @@
 						width: 250,
 						align: 'center',
 						render: (h, params) => {
-							
+
 							let btns = [
 								h('Button', {
 									props: {
 										type: params.row.subNavs ? 'primary' : 'ghost',
 										size: 'small',
-										disabled : params.row.subNavs === null
+										disabled: params.row.subNavs === null
 									},
 									style: {
 										marginRight: '5px'
@@ -133,11 +151,11 @@
 									on: {
 										click: () => {
 											// TODO 删除按钮
+											this.btnDel(params.row);
 										}
 									}
 								}, '删除')
 							];
-
 
 							return h('div', btns);
 						}
@@ -145,12 +163,11 @@
 				];
 
 				// 二级导航表格
-				this.columns2 = [
-					{
-                        type: 'index',
-                        width: 60,
-                        align: 'center'
-                    },
+				this.columns2 = [{
+						type: 'index',
+						width: 60,
+						align: 'center'
+					},
 					{
 						title: '名称',
 						key: 'title',
@@ -180,7 +197,7 @@
 						width: 250,
 						align: 'center',
 						render: (h, params) => {
-							
+
 							let btns = [
 								h('Button', {
 									props: {
@@ -208,7 +225,6 @@
 									}
 								}, '删除')
 							];
-
 
 							return h('div', btns);
 						}
