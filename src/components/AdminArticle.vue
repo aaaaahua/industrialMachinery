@@ -1,5 +1,9 @@
 <template>
-    <Table border :columns="columns7" :data="data6" width="240px"></Table>
+    <div class="admin-content">
+		<h2 class="title-header">文章管理 <small> —— Navigation Manager</small></h2>
+		<br>
+        <Table border :columns="columns7" :data="data6" width="240px"></Table>
+    </div>
 </template>
 <script>
     export default {
@@ -101,3 +105,6 @@
         }
     }
 </script>
+<style scoped>
+
+</style>
