@@ -26,7 +26,7 @@
 				columns1: [],
 				columns2: [],
 				activeNav: null, // 当前激活的一级菜单
-				allTitles: [],
+				idArr: [],
 			}
 		},
 		mounted() {
@@ -61,9 +61,9 @@
 					}
 				});
 				this.navList1.forEach((value) => {
-					this.allTitles.push(value.title);
+					this.idArr.push(value.id);
 				})
-				let index_ = this.allTitles.indexOf(CurrData.title);
+				let index_ = this.idArr.indexOf(CurrData.id);
 				this.navList1.splice(index_, 1);
 			},
 			initColumn() {
