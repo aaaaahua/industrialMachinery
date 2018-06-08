@@ -60,11 +60,12 @@
 						this.$Message.error("网络异常");
 					}
 				});
-				this.navList1.forEach((value) => {
-					this.idArr.push(value.id);
+
+				let newNavList = this.navList1.filter((value) => {
+					return value.id != CurrData.id;
 				})
-				let index_ = this.idArr.indexOf(CurrData.id);
-				this.navList1.splice(index_, 1);
+
+				this.navList1 = newNavList;
 			},
 			initColumn() {
 				// 一级导航表格
