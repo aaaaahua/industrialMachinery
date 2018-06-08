@@ -7,13 +7,13 @@
 			<MenuGroup title="网站管理">
 				<MenuItem name="1">
 				<Icon type="navicon-round"></Icon>
-				<router-link to="/Admin/adminArticle/">导航栏管理</router-link>
+				<router-link to="/Admin/adminNavbar/" style="color: white;">导航栏管理</router-link>
 				</MenuItem>
 			</MenuGroup>
 			<MenuGroup title="内容管理">
 				<MenuItem name="2">
 				<Icon type="document-text"></Icon>
-				文章管理
+				<router-link to="/Admin/adminArticle/"style="color: white;">文章管理</router-link>
 				</MenuItem>
 			</MenuGroup>
 			<MenuGroup title="评价管理">

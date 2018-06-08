@@ -101,7 +101,7 @@
 			},
 			formLoginSubmit() {
 				this.$router.push({
-					path: '/Admin/'
+					path: '/Admin/adminNavbar/'
 				});
 //				new Promise((resolve, reject) => {
 //						// 请求登录接口

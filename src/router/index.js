@@ -4,6 +4,7 @@ import App from '@/App'
 import Admin from '@/Admin'
 import Article from '@/components/Article'
 import AdminArticle from '@/components/AdminArticle'
+import AdminNavbar from '@/components/AdminNavbar'
 
 Vue.use(Router)
 
@@ -24,6 +25,7 @@ export default new Router({
 			component: Admin,
 			children: [
 				{ path: 'adminArticle/', component: AdminArticle },
+				{ path: 'adminNavbar/', component: AdminNavbar },
 				]
     },
   ]
