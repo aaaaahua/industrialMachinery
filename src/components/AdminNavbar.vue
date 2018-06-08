@@ -55,7 +55,7 @@
 				this.$http.delete("api/nav/del?id="+CurrData.id).then((res) => {
 					var result = res.body;
 					if(result) {
-						this.navList1 = result;
+						this.$Message.error("删除成功");
 					} else {
 						this.$Message.error("网络异常");
 					}

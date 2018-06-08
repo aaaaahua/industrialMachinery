@@ -100,62 +100,59 @@
 				})
 			},
 			formLoginSubmit() {
-				this.$router.push({
-					path: '/Admin/adminNavbar/'
-				});
-//				new Promise((resolve, reject) => {
-//						// 请求登录接口
-//						this.$http.post("api/user/login", this.formLogin)
-//							.then((res) => {
-//								let result = res.body;
-//
-//								if(result.success) {
-//									resolve(result);
-//								} else {
-//									reject(result.msg);
-//								}
-//							}, (err) => {
-//								reject("网络异常");
-//							});
-//					}).then((result) => {
-//						return new Promise((resolve, reject) => {
-//							// 储存token
-//							this.$localStorage.set("token", result.data);
-//							this.$Message.info("登录成功");
-//							this.$router.push({
-//								path: '/Admin/'
-//							});
-//							let header = {
-//								"Authorization": "Bearer " + result.data
-//							};
-//							// 请求用户个人信息
-//							//							this.$http.get("api/user/own/info", {
-//							//									headers: header
-//							//								})
-//							//								.then((res) => {
-//							//										let result = res.body;
-//							//										if(result.success) {
-//							//											this.$localStorage.set("user", JSON.stringify(result.data));
-//							//											this.modalLogin = false;
-//							//											this.user = this.fixUserInfo(result.data);
-//							//											this.login = true;
-//							//											this.$Message.info("登录成功");
-//							//										} else {
-//							//											reject(result.msg);
-//							//										}
-//							//									},
-//							//									(err) => {
-//							//										reject("网络异常");
-//							//									});
-//						});
-//					})
-//					.catch((err) => {
-//						this.$Message.error(err);
-//						this.loadingLogin = false;
-//						this.$nextTick(() => {
-//							this.modalLogin = true;
-//						});
-//					});
+				new Promise((resolve, reject) => {
+						// 请求登录接口
+						this.$http.post("api/user/login", this.formLogin)
+							.then((res) => {
+								let result = res.body;
+
+								if(result.success) {
+									resolve(result);
+								} else {
+									reject(result.msg);
+								}
+							}, (err) => {
+								reject("网络异常");
+							});
+					}).then((result) => {
+						return new Promise((resolve, reject) => {
+							// 储存token
+							this.$localStorage.set("token", result.data);
+							this.$Message.info("登录成功");
+							this.$router.push({
+								path: '/Admin/adminNavbar/'
+							});
+							let header = {
+								"Authorization": "Bearer " + result.data
+							};
+							// 请求用户个人信息
+							//							this.$http.get("api/user/own/info", {
+							//									headers: header
+							//								})
+							//								.then((res) => {
+							//										let result = res.body;
+							//										if(result.success) {
+							//											this.$localStorage.set("user", JSON.stringify(result.data));
+							//											this.modalLogin = false;
+							//											this.user = this.fixUserInfo(result.data);
+							//											this.login = true;
+							//											this.$Message.info("登录成功");
+							//										} else {
+							//											reject(result.msg);
+							//										}
+							//									},
+							//									(err) => {
+							//										reject("网络异常");
+							//									});
+						});
+					})
+					.catch((err) => {
+						this.$Message.error(err);
+						this.loadingLogin = false;
+						this.$nextTick(() => {
+							this.modalLogin = true;
+						});
+					});
 			},
 		},
 	}
