@@ -23,14 +23,41 @@
 					<Input v-model="addNavForm.title"></Input>
 				</FormItem>
 				<FormItem label="跳转">
-					<RadioGroup v-model="genders">
-						<Radio label="male">否</Radio>
-						<Radio label="female">是</Radio>
-					</RadioGroup>
-					<Input v-model="addNavForm.input3" style="width: 66%;float: right;" placeholder="url地址"></Input>
+					<Row>
+						<Col span="5">
+						<RadioGroup>
+							<Radio label="jumpNot" @click.native="jumpUrl=false">否</Radio>
+							<Radio label="jumpYes" @click.native="jumpUrl=true">是</Radio>
+						</RadioGroup>
+						</Col>
+						<Col span="19">
+						<Input v-model="addNavForm.jumpUrl" style="float: right;" placeholder="url地址" v-show="jumpUrl"></Input>
+						</Col>
+					</Row>
 				</FormItem>
-				<FormItem label="二级菜单">
-					<Input v-model="addNavForm.input3"></Input>
+				<FormItem label="二级导航栏">
+					<RadioGroup>
+						<Radio label="childNavbarNot" @click.native="childNavbar=false">否</Radio>
+						<Radio label="childNavbarYes" @click.native="childNavbar=true">是</Radio>
+					</RadioGroup>
+				</FormItem>
+				<FormItem v-show="childNavbar" v-for="(item, index) in addNavForm.items" v-if="item.status" :key="index" :label="'二级导航栏'+index" :prop="'items.' + index + '.value'">
+					<Row>
+						<Col span="19">
+						<Input type="text" v-model="item.value" placeholder="输入二级导航栏名称" v-show="childNavbar"></Input>
+						</Col>
+						<Col span="4" offset="1">
+						<Button type="ghost" @click="handleRemove(index)">删除</Button>
+						</Col>
+					</Row>
+				</FormItem>
+				<FormItem v-show="childNavbar">
+					<Row>
+
+						<Col span="6">
+						<Button type="dashed" long @click="handleAdd" icon="plus-round">增加</Button>
+						</Col>
+					</Row>
 				</FormItem>
 			</Form>
 
@@ -47,7 +74,13 @@
 	export default {
 		data() {
 			return {
+				index: 1,
 				addNavForm: {
+					items: [{
+						value: '',
+						index: 1,
+						status: 1
+					}],
 					title: '',
 					input2: '',
 					input3: ''
@@ -61,7 +94,8 @@
 				comfirmDel: false,
 				CurrData: [],
 				addNavbar: false,
-				genders: '',
+				jumpUrl: false,
+				childNavbar: false,
 			}
 		},
 		mounted() {
@@ -110,6 +144,17 @@
 			},
 			cancel() {
 				this.$Message.info('已取消操作');
+			},
+			handleAdd() {
+				this.index++;
+				this.addNavForm.items.push({
+					value: '',
+					index: this.index,
+					status: 1
+				});
+			},
+			handleRemove(index) {
+				this.addNavForm.items[index].status = 0;
 			},
 			initColumn() {
 				// 一级导航表格
