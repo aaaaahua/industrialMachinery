@@ -31,7 +31,7 @@
 						</RadioGroup>
 						</Col>
 						<Col span="19">
-						<Input v-model="addNavForm.jumpUrl" style="float: right;" placeholder="url地址" v-show="jumpUrl"></Input>
+						<Input v-model="addNavForm.jumpUrl" style="float: right;" placeholder="输入url地址" v-show="jumpUrl"></Input>
 						</Col>
 					</Row>
 				</FormItem>
