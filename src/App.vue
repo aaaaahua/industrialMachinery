@@ -9,14 +9,16 @@
 					</MenuItem>
 					<Submenu v-else :name="'nav_' + item.id">
 						<template slot="title">
-							{{item.title}}
+							<router-link to="index/" >{{item.title}}</router-link>
 						</template>
 						<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title" :key="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
 					</Submenu>
 				</div>
 			</Menu>
 		</nav>
-		<div style="height: 400px;width: 100%;">
+		<div style="width: 100%;">
+			<section style="height: 6px;"></section>
+
 			<router-view/>
 		</div>
 		<footer>
@@ -126,24 +128,24 @@
 								"Authorization": "Bearer " + result.data
 							};
 							// 请求用户个人信息
-							//							this.$http.get("api/user/own/info", {
-							//									headers: header
-							//								})
-							//								.then((res) => {
-							//										let result = res.body;
-							//										if(result.success) {
-							//											this.$localStorage.set("user", JSON.stringify(result.data));
-							//											this.modalLogin = false;
-							//											this.user = this.fixUserInfo(result.data);
-							//											this.login = true;
-							//											this.$Message.info("登录成功");
-							//										} else {
-							//											reject(result.msg);
-							//										}
-							//									},
-							//									(err) => {
-							//										reject("网络异常");
-							//									});
+														this.$http.get("api/user/own/info", {
+																headers: header
+															})
+															.then((res) => {
+																	let result = res.body;
+																	if(result.success) {
+																		this.$localStorage.set("user", JSON.stringify(result.data));
+																		this.modalLogin = false;
+																		this.user = this.fixUserInfo(result.data);
+																		this.login = true;
+																		this.$Message.info("登录成功");
+																	} else {
+																		reject(result.msg);
+																	}
+																},
+																(err) => {
+																	reject("网络异常");
+																});
 						});
 					})
 					.catch((err) => {
