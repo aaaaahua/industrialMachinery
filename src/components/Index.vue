@@ -28,33 +28,29 @@
 		</Collapse>
 		<div style="clear: both"></div>
 		<section class="indexSection">
-			<p>新闻中心<span>更多>></span></p>
-			<div>
+			<h3>新闻中心<span>更多>></span></h3>
+			<div class="indexSectionContent">
 				<ul>
-					<li>aa</li>
-					<li>aa</li>
-					<li>aa</li>
+					<li>结束塑料污染 – 印度</li>
+					<li>结束塑料污染 – 印度结束塑料污染 – 印度</li>
+					<li>结束塑料污染 – 印度</li>
 				</ul>
 			</div>
 		</section>
 		<section class="indexSection">
-			<p>新闻中心<span>更多>></span></p>
-			<div>
-				<ul>
-					<li>aa</li>
-					<li>aa</li>
-					<li>aa</li>
-				</ul>
+			<h3>关于我们<span>更多>></span></h3>
+			<div class="indexSectionContent">
+				<span>Walsn公司是优秀的电子仪器和过程控制方案提供商，生产先进的监视、测试、校准、测量和显示仪器。总部设在加拿大大不列颠哥伦比亚省的温哥华市。销售和服务分公司已经分布到北美、欧洲、亚洲、南美和澳洲。务分公司已经分布到北美、欧洲、亚洲、南美和澳洲。沃森公司已经授权的分销商遍布世界100多个国家和地</span>
 			</div>
 		</section>
 		<section class="indexSection">
-			<p>新闻中心<span>更多>></span></p>
-			<div>
-				<ul>
-					<li>aa</li>
-					<li>aa</li>
-					<li>aa</li>
-				</ul>
+			<h3>联系我们<span>更多>></span></h3>
+			<div class="indexSectionContent">
+				<h3>怡风科技</h3>
+				<p>电话：010-58856890 传真：010-58856997</p>
+				<p>Walsn中国（北京）代表处电话：010-58856890 </p>
+				<p> 传真：010-58856997客服：400 800 3658 </p>
+				<p>邮箱：service@walsn.com</p>
 			</div>
 		</section>
 	</div>
@@ -66,7 +62,7 @@
 		data() {
 			return {
 				carouselIndex: 0,
-				value2: 2
+				value2: '2',
 			}
 		},
 	}
@@ -95,16 +91,29 @@
 		margin-right: 2px;
 	}
 	
-	.indexSection>p {
+	.indexSection>h3 {
+		padding: 3px 5px;
 		font-size: medium;
 		height: 30px;
 		width: 100%;
-		border-bottom: 1px solid #D3D3D3;
+		border-top: 1px solid #E8E8E8;
+		border-right: 1px solid #D3D3D3;
+		border-bottom: 1px solid #B2B2B2;
+		border-left: 1px solid #D3D3D3;
+		background: url(../../static/contbg.jpg) left top repeat-x;
 	}
-	.indexSection>p>span{
+	
+	.indexSection>h3>span {
 		float: right;
 		color: #1D81B8;
 		font-size: xx-small;
 		line-height: 26px;
+	}
+	
+	.indexSectionContent {
+		padding: 8px;
+	}
+	.indexSectionContent ul li{
+		font-size: small;
 	}
 </style>

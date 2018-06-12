@@ -15,7 +15,7 @@ export default new Router({
 			//			path: '/Admin/',
 			component: App,
 			children: [{
-					path: 'index/',
+					path: '/',
 					component: Index
 				},
 				{
