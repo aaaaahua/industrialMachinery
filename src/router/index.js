@@ -4,6 +4,7 @@ import App from '@/App'
 import Admin from '@/Admin'
 import Article from '@/components/Article'
 import Index from '@/components/Index'
+import UserSuggestions from '@/components/UserSuggestions'
 import AdminArticle from '@/components/AdminArticle'
 import AdminNavbar from '@/components/AdminNavbar'
 
@@ -21,6 +22,10 @@ export default new Router({
 				{
 					path: 'article/',
 					component: Article
+				},
+				{
+					path: 'UserSuggestions/',
+					component: UserSuggestions
 				},
 			]
 		},
