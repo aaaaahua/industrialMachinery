@@ -16,8 +16,7 @@
 				</div>
 			</Menu>
 		</nav>
-		<div style="width: 100%;">
-			<section style="height: 6px">&nbsp;</section>
+		<div style="width: 100%;padding-top: 6px;">
 			<router-view/>
 		</div>
 		<footer>

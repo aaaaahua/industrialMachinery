@@ -44,7 +44,7 @@
 			</div>
 		</section>
 		<section class="indexSection">
-			<h3>联系我们<span>更多>></span></h3>
+			<h3>联系我们<router-link to="UserSuggestions/"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<h3>怡风科技</h3>
 				<p>电话：010-58856890 传真：010-58856997</p>
@@ -103,7 +103,7 @@
 		background: url(../../static/contbg.jpg) left top repeat-x;
 	}
 	
-	.indexSection>h3>span {
+	.indexSection>h3 span {
 		float: right;
 		color: #1D81B8;
 		font-size: xx-small;
@@ -113,7 +113,8 @@
 	.indexSectionContent {
 		padding: 8px;
 	}
-	.indexSectionContent ul li{
+	
+	.indexSectionContent ul li {
 		font-size: small;
 	}
 </style>
