@@ -13,7 +13,7 @@
 			<MenuGroup title="内容管理">
 				<MenuItem name="2">
 				<Icon type="document-text"></Icon>
-				<router-link to="/Admin/adminArticle/"style="color: white;">文章管理</router-link>
+				<router-link to="/Admin/adminArticle/" style="color: white;">文章管理</router-link>
 				</MenuItem>
 			</MenuGroup>
 			<MenuGroup title="评价管理">
