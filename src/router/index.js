@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import App from '@/App'
 import Admin from '@/Admin'
+import SiderIndex from '@/SiderIndex'
 import Article from '@/components/Article'
 import Index from '@/components/Index'
 import UserSuggestions from '@/components/UserSuggestions'
@@ -25,7 +26,8 @@ export default new Router({
 				},
 				{
 					path: 'UserSuggestions/',
-					component: UserSuggestions
+//					component: UserSuggestions
+					component:SiderIndex
 				},
 			]
 		},
@@ -43,5 +45,6 @@ export default new Router({
 				},
 			]
 		},
+		
 	]
 })

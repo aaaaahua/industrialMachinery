@@ -3,22 +3,22 @@
 		<section class="leftTextarea">
 			<h2 class="title">联系我们</h2>
 			<Form :model="formLeft" label-position="left" :label-width="100" style="width: 525px;">
-				<FormItem label="Title">
+				<FormItem label="姓名">
 					<Input v-model="formLeft.input1"></Input>
 				</FormItem>
-				<FormItem label="Title name">
+				<FormItem label="E-mail">
 					<Input v-model="formLeft.input2"></Input>
 				</FormItem>
-				<FormItem label="Aligned title">
+				<FormItem label="手机号码">
 					<Input v-model="formLeft.input3"></Input>
 				</FormItem>
-				<FormItem label="Text">
-					<Input v-model="formLeft.textEdit" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+				<FormItem label="留言">
+					<Input v-model="formLeft.textEdit" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请留下您的宝贵建议"></Input>
 				</FormItem>
 				<FormItem>
-            <Button type="primary" @click="handleSubmit('formCustom')">Submit</Button>
-            <Button type="ghost" @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
-        </FormItem>
+					<Button type="primary" @click="handleSubmit('formCustom')">提交</Button>
+					<Button type="primary" @click="handleSubmit('formCustom')">重置</Button>
+				</FormItem>
 			</Form>
 		</section>
 		<section class="rightInfo">
@@ -82,14 +82,14 @@
 	.rightInfo {
 		width: 330px;
 		display: inline-block;
-		margin-top: -6px;
 	}
 	
 	.rightInfoTable {
 		margin-left: 130px;
-		background-color: #E4E9E3;
+		background-color: #eee;
 		width: 200px;
-		height: 315px;
+		float: right;
+		padding-bottom: 20%
 	}
 	
 	.rightInfoTableImg {
