@@ -28,11 +28,16 @@
 		</Collapse>
 		<div style="clear: both"></div>
 		<section class="indexSection">
-			<h3>新闻中心<span>更多>></span></h3>
+			<h3>新闻中心<router-link to="article/"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
+				<img src="../../static/news.gif" />
 				<ul>
+					<li>结束塑料污染 – 印度结束塑</li>
+					<li>结束塑料污染 – 印度结束塑料</li>
 					<li>结束塑料污染 – 印度</li>
-					<li>结束塑料污染 – 印度结束塑料污染 – 印度</li>
+					<li>结束塑料污染 – 印度</li>
+					<li>结束塑料污染 – 印度</li>
+					<li>结束塑料污染 – 印度</li>
 					<li>结束塑料污染 – 印度</li>
 				</ul>
 			</div>
@@ -40,7 +45,12 @@
 		<section class="indexSection">
 			<h3>关于我们<span>更多>></span></h3>
 			<div class="indexSectionContent">
-				<span>Walsn公司是优秀的电子仪器和过程控制方案提供商，生产先进的监视、测试、校准、测量和显示仪器。总部设在加拿大大不列颠哥伦比亚省的温哥华市。销售和服务分公司已经分布到北美、欧洲、亚洲、南美和澳洲。务分公司已经分布到北美、欧洲、亚洲、南美和澳洲。沃森公司已经授权的分销商遍布世界100多个国家和地</span>
+				<Card style="width:302px">
+					<div style="text-align:center">
+						<img src="../../static/logo1.png">
+						<h3>A high quality UI Toolkit based on Vue.js</h3>
+					</div>
+				</Card>
 			</div>
 		</section>
 		<section class="indexSection">
@@ -51,6 +61,7 @@
 				<p>Walsn中国（北京）代表处电话：010-58856890 </p>
 				<p> 传真：010-58856997客服：400 800 3658 </p>
 				<p>邮箱：service@walsn.com</p>
+				<p>地址：厦门市思明区北京市朝阳区望京东路6号 望京国际研发园三期</p>
 			</div>
 		</section>
 	</div>
@@ -112,9 +123,24 @@
 	
 	.indexSectionContent {
 		padding: 8px;
+		line-height: 2em;
+	}
+	
+	.indexSectionContent img {
+		width: 90px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	
+	.indexSectionContent ul {
+		display: inline-block;
+		width: 60%;
+		margin-left: 5%;
 	}
 	
 	.indexSectionContent ul li {
 		font-size: small;
+		line-height: 2em;
+		text-decoration: underline;
 	}
 </style>

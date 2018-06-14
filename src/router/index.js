@@ -26,8 +26,8 @@ export default new Router({
 				},
 				{
 					path: 'UserSuggestions/',
-//					component: UserSuggestions
-					component:SiderIndex
+					component: UserSuggestions
+//					component:SiderIndex
 				},
 			]
 		},
