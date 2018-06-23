@@ -5,14 +5,16 @@
 			<img src="../static/logo2.png" class="logoPos">
 			<Menu mode="horizontal" class="navMenu" active-name="nav_1">
 				<div v-for="item in navList" :key="'nav_' + item.id">
-					<MenuItem v-if="!item.subNavs" :name="'nav_' + item.id"> {{item.title}}
-					</MenuItem>
-					<Submenu v-else :name="'nav_' + item.id">
-						<template slot="title">
-							{{item.title}}
-						</template>
-						<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title" :key="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
-					</Submenu>
+					<router-link :to="item.needJump ? item.jumpUrl : 'article/1'" >
+						<MenuItem v-if="!item.subNavs" :name="'nav_' + item.id"> {{item.title}}
+						</MenuItem>
+						<Submenu v-else :name="'nav_' + item.id">
+							<template slot="title">
+								{{item.title}}
+							</template>
+							<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title" :key="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
+						</Submenu>
+					</router-link>
 				</div>
 			</Menu>
 		</nav>
@@ -165,12 +167,20 @@
 	}
 	
 	.navMenu {
-		background: linear-gradient(rgb(168, 71, 14), rgb(156, 36, 6));
+		background: linear-gradient( rgb(156, 36, 6), rgb(168, 71, 14));
+		height: 50px;
+		line-height: 50px;	
 	}
 	
-	.navMenu div>li {
+	.navMenu div>a>li {
 		color: #FFFFFF!important;
 	}
+
+	.ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
+		border-bottom: 2px solid rgb(188, 78, 22);
+	}
+
+	
 	
 	.footer {
 		height: 42px;
@@ -179,8 +189,9 @@
 		padding: 10px 0;
 		line-height: 24px;
 		text-align: center;
-		background-color: #eee;
-		color: #666;
+		background:linear-gradient( rgb(156, 36, 6), rgb(168, 71, 14));
+		color: #FFF;
 		font-weight: 300;
+		box-shadow: 2px 2px 4px rgb(156, 36, 6);
 	}
 </style>

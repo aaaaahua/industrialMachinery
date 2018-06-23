@@ -1,7 +1,7 @@
 <template>
 	<div id='Admin'>
 		<div class="adminHeader">
-			<p>管理员系统</p>
+			<p>怡风科技后台管理员系统</p>
 		</div>
 		<Menu :theme="theme3" active-name="1" class="adminNavbar">
 			<MenuGroup title="网站管理">

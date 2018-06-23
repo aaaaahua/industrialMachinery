@@ -2,13 +2,55 @@
 	<div class="admin-content">
 		<h2 class="title-header">文章管理 <small> —— Article Manager</small></h2>
 		<br>
-		<Table border :columns="columns7" :data="data6" width="240px"></Table>
+		<!-- <Table border :columns="columns7" :data="data6" width="240px"></Table> -->
+		<editor id="tinymce" v-model="textHtml" :init= "initEditor" ></editor>
 	</div>
 </template>
 <script>
-	export default {  
+	import tinymce from 'tinymce/tinymce'
+	import 'tinymce/themes/modern/theme'
+	import Editor from '@tinymce/tinymce-vue'
+	import 'tinymce/plugins/image'
+
+	export default {
+		components:{ Editor },
 		data() {
 			return {
+				textHtml: "",
+				initEditor: {
+					language_url: 'static/zh_CN.js',
+					language: 'zh_CN',
+					skin_url: 'static/skins/lightgray',
+					height: 300,
+					plugins:"image",
+					images_upload_handler: (blobInfo, success, failure) => {
+						var xhr, formData;
+						var token = this.$localStorage.get("token");
+						var root = this.$http.options.root;
+						xhr = new XMLHttpRequest();
+						xhr.withCredentials = false;
+						xhr.open('POST', root + "api/swiper/upload");
+						xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+						xhr.onload = function() {
+							var json;
+
+							if (xhr.status != 200) {
+								failure('HTTP Error: ' + xhr.status);
+								return;
+							}
+							json = JSON.parse(xhr.responseText);
+
+							if (!json || typeof json.data != 'string') {
+								failure('Invalid JSON: ' + xhr.responseText);
+								return;
+							}
+							success(root + json.data);
+						};
+						formData = new FormData();
+						formData.append('file', blobInfo.blob(), blobInfo.fileName);
+						xhr.send(formData);
+					}
+				},
 				columns7: [{
 						title: 'Name',
 						key: 'name',
@@ -71,24 +113,12 @@
 						name: 'John Brown',
 						age: 18,
 						address: 'New York No. 1 Lake Park'
-					},
-					{
-						name: 'Jim Green',
-						age: 24,
-						address: 'London No. 1 Lake Park'
-					},
-					{
-						name: 'Joe Black',
-						age: 30,
-						address: 'Sydney No. 1 Lake Park'
-					},
-					{
-						name: 'Jon Snow',
-						age: 26,
-						address: 'Ottawa No. 2 Lake Park'
 					}
 				]
 			}
+		},
+		mounted() {
+			tinymce.init({});
 		},
 		methods: {
 			show(index) {

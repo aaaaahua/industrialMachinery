@@ -22,42 +22,49 @@
 				<FormItem label="名称">
 					<Input v-model="addNavForm.title"></Input>
 				</FormItem>
+				<FormItem label="父级菜单">
+					<Select v-model="addNavForm.parentId">
+						<Option v-for="nav in navList1" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
+					</Select>
+				</FormItem>
 				<FormItem label="跳转">
 					<Row>
 						<Col span="5">
-						<RadioGroup>
-							<Radio label="jumpNot" @click.native="jumpUrl=false">否</Radio>
-							<Radio label="jumpYes" @click.native="jumpUrl=true">是</Radio>
+						<RadioGroup v-model="addNavForm.needJump">
+							<Radio label="false" @click.native="fixNavForm.needJump=false">否</Radio>
+							<Radio label="true" @click.native="fixNavForm.needJump=true">是</Radio>
 						</RadioGroup>
 						</Col>
 						<Col span="19">
-						<Input v-model="addNavForm.jumpUrl" style="float: right;" placeholder="输入url地址" v-show="jumpUrl"></Input>
+							<Input v-model="addNavForm.jumpUrl" style="float: right;" placeholder="输入url地址" v-show="fixNavForm.needJump"></Input>
 						</Col>
 					</Row>
 				</FormItem>
-				<FormItem label="二级导航栏">
-					<RadioGroup>
-						<Radio label="childNavbarNot" @click.native="childNavbar=false">否</Radio>
-						<Radio label="childNavbarYes" @click.native="childNavbar=true">是</Radio>
-					</RadioGroup>
-				</FormItem>
-				<FormItem v-show="childNavbar" v-for="(item, index) in addNavForm.items" v-if="item.status" :key="index" :label="'二级导航栏'+index" :prop="'items.' + index + '.value'">
-					<Row>
-						<Col span="19">
-						<Input type="text" v-model="item.value" placeholder="输入二级导航栏名称" v-show="childNavbar"></Input>
-						</Col>
-						<Col span="4" offset="1">
-						<Button type="ghost" @click="handleRemove(index)">删除</Button>
-						</Col>
-					</Row>
-				</FormItem>
-				<FormItem v-show="childNavbar">
-					<Row>
+			</Form>
 
-						<Col span="6">
-						<Button type="dashed" long @click="handleAdd" icon="plus-round">增加</Button>
+		</Modal>
+
+		<!--修改导航栏模态框-->
+		<Modal v-model="modalFixNav" title="修改导航栏" @on-ok="fixNavSubmit" @on-cancel="cancel">
+			<Form :model="fixNavForm" label-position="left" :label-width="100">
+				<FormItem label="名称">
+					<Input v-model="fixNavForm.title"></Input>
+				</FormItem>
+				<FormItem label="跳转">
+					<Row>
+						<Col span="5">
+						<RadioGroup v-model="fixNavForm.needJump">
+							<Radio label="false" @click.native="fixNavForm.needJump=false">否</Radio>
+							<Radio label="true" @click.native="fixNavForm.needJump=true">是</Radio>
+						</RadioGroup>
+						</Col>
+						<Col span="19">
+							<Input v-model="fixNavForm.jumpUrl" style="float: right;" placeholder="输入url地址" v-show="fixNavForm.needJump == 'true'"></Input>
 						</Col>
 					</Row>
+				</FormItem>
+				<FormItem label="排序等级">
+					<Input v-model="fixNavForm.sortLevel"></Input>
 				</FormItem>
 			</Form>
 
@@ -76,15 +83,12 @@
 			return {
 				index: 1,
 				addNavForm: {
-					items: [{
-						value: '',
-						index: 1,
-						status: 1
-					}],
-					title: '',
-					input2: '',
-					input3: ''
+					
 				},
+				fixNavForm:{
+
+				},
+				modalFixNav:false,
 				isHref: false,
 				navList1: [],
 				navList2: [],
@@ -94,8 +98,6 @@
 				comfirmDel: false,
 				CurrData: [],
 				addNavbar: false,
-				jumpUrl: false,
-				childNavbar: false,
 			}
 		},
 		mounted() {
@@ -120,8 +122,59 @@
 			remove(index) {
 				this.data6.splice(index, 1);
 			},
-			AddSure() {
+			fixNavSubmit(){
+				new Promise((resolve, reject)=>{
+					// 请求修改导航栏接口
+					//if(!this.addNavForm.needJump) this.addNavForm.needJump = false;
 
+					this.$http.put("api/nav/fix?id=" + this.fixNavForm.id, this.fixNavForm)
+					.then((res) => {
+						let result = res.body;
+
+						if(result.success){
+							resolve(result);
+						}else{
+							reject(result.msg);
+						}
+					},(err) => {
+						reject("网络异常");
+					});
+				}).then((result)=>{
+					this.$Message.success("修改成功");
+					this.modalFixNav = false;
+					setTimeout(() => {
+						this.$router.go();
+					}, 666);
+				}).catch((err)=>{
+					this.$Message.error(err);
+				});
+			},
+			AddSure() {
+				new Promise((resolve, reject)=>{
+					// 请求新增导航栏接口
+					if(!this.addNavForm.needJump) this.addNavForm.needJump = false;
+
+					this.$http.post("api/nav/add", this.addNavForm)
+					.then((res) => {
+						let result = res.body;
+
+						if(result.success){
+							resolve(result);
+						}else{
+							reject(result.msg);
+						}
+					},(err) => {
+						reject("网络异常");
+					});
+				}).then((result)=>{
+					this.$Message.success("添加成功");
+					this.addNavbar = false;
+					setTimeout(() => {
+						this.$router.go();
+					}, 666);
+				}).catch((err)=>{
+					this.$Message.error(err);
+				});
 			},
 			btnDel(CurrData) {
 				this.comfirmDel = true;
@@ -132,11 +185,8 @@
 				this.$http.delete("api/nav/del?id=" + this.CurrData.id).then((res) => {
 					var result = res.body;
 					if(result) {
-						let newNavList = this.navList1.filter((value) => {
-							return value.id != this.CurrData.id;
-						});
-						this.navList1 = newNavList;
-						this.$Message.error("删除成功");
+						this.$Message.success("删除成功");
+						this.$router.go();
 					} else {
 						this.$Message.error("网络异常");
 					}
@@ -144,14 +194,6 @@
 			},
 			cancel() {
 				this.$Message.info('已取消操作');
-			},
-			handleAdd() {
-				this.index++;
-				this.addNavForm.items.push({
-					value: '',
-					index: this.index,
-					status: 1
-				});
 			},
 			handleRemove(index) {
 				this.addNavForm.items[index].status = 0;
@@ -229,7 +271,9 @@
 									},
 									on: {
 										click: () => {
-											// TODO 修改按钮
+											params.row.needJump = params.row.needJump.toString();
+											this.fixNavForm = params.row;
+											this.modalFixNav = true;
 										}
 									}
 								}, '修改'),
@@ -240,7 +284,6 @@
 									},
 									on: {
 										click: () => {
-											// TODO 删除按钮
 											this.btnDel(params.row);
 
 										}
@@ -300,7 +343,9 @@
 									},
 									on: {
 										click: () => {
-											this.show(params.index)
+											params.row.needJump = params.row.needJump.toString();
+											this.fixNavForm = params.row;
+											this.modalFixNav = true;
 										}
 									}
 								}, '修改'),
@@ -311,7 +356,7 @@
 									},
 									on: {
 										click: () => {
-											this.remove(params.index)
+											this.btnDel(params.row);
 										}
 									}
 								}, '删除')

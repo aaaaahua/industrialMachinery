@@ -14,7 +14,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.0.8",
     "iview": "^2.14.1",
+    "tinymce": "^4.7.13",
     "vue": "^2.5.2",
     "vue-localstorage": "^0.6.2",
     "vue-resource": "^1.5.1",
