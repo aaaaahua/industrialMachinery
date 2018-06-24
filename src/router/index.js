@@ -8,13 +8,13 @@ import Index from '@/components/Index'
 import UserSuggestions from '@/components/UserSuggestions'
 import AdminArticle from '@/components/AdminArticle'
 import AdminNavbar from '@/components/AdminNavbar'
+import AdminNote from '@/components/AdminNote'
 
 Vue.use(Router)
 
 export default new Router({
 	routes: [{
 			path: '/',
-			//			path: '/Admin/',
 			component: App,
 			children: [{
 					path: '/',
@@ -27,13 +27,11 @@ export default new Router({
 				{
 					path: 'UserSuggestions/',
 					component: UserSuggestions
-//					component:SiderIndex
 				},
 			]
 		},
 		{
 			path: '/Admin/',
-			//  	path: '/',
 			component: Admin,
 			children: [{
 					path: 'adminArticle/',
@@ -42,6 +40,10 @@ export default new Router({
 				{
 					path: 'adminNavbar/',
 					component: AdminNavbar
+				},
+				{
+					path: 'adminNote/',
+					component: AdminNote
 				},
 			]
 		},

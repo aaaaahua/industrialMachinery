@@ -88,7 +88,7 @@
 	.indexTitle {
 		height: 40px;
 		width: 314px;
-		background: linear-gradient(rgb(168, 71, 14), rgb(156, 36, 6));
+		background: linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
 		color: #FFFFFF;
 		font-size: large;
 		text-align: center;

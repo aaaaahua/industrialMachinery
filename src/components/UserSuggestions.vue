@@ -78,12 +78,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 	.title {
-		border-bottom: 1px solid rgb(168, 71, 14);
+		border-bottom: 1px solid rgb(37, 137, 189);
 		width: 625px;
 
 		margin-bottom: 30px;
 		padding: 2px 0px;
-		color:rgb(168, 71, 14);
+		color:rgb(37, 137, 189);
 	}
 	
 	.leftTextarea {

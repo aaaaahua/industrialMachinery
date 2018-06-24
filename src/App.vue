@@ -167,7 +167,7 @@
 	}
 	
 	.navMenu {
-		background: linear-gradient( rgb(156, 36, 6), rgb(168, 71, 14));
+		background: linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
 		height: 50px;
 		line-height: 50px;	
 	}
@@ -177,7 +177,7 @@
 	}
 
 	.ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
-		border-bottom: 2px solid rgb(188, 78, 22);
+		border-bottom: 2px solid rgb(37, 137, 189);
 	}
 
 	
@@ -189,9 +189,9 @@
 		padding: 10px 0;
 		line-height: 24px;
 		text-align: center;
-		background:linear-gradient( rgb(156, 36, 6), rgb(168, 71, 14));
+		background:linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
 		color: #FFF;
 		font-weight: 300;
-		box-shadow: 2px 2px 4px rgb(156, 36, 6);
+		box-shadow: 2px 2px 4px rgb(37, 137, 189);
 	}
 </style>
