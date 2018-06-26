@@ -38,7 +38,8 @@
 		methods: {
 			initColumn() {
 				// 一级导航表格
-				this.columns1 = [{
+				this.columns1 = [
+					{
 						type: 'index',
 						width: 60,
 						align: 'center'

@@ -5,7 +5,7 @@
 			<img src="../static/logo2.png" class="logoPos">
 			<Menu mode="horizontal" class="navMenu" active-name="nav_1">
 				<div v-for="item in navList" :key="'nav_' + item.id">
-					<router-link :to="item.needJump ? item.jumpUrl : 'article/1'" >
+					<router-link :to="item.needJump ? item.jumpUrl : '/article/'+ item.id" >
 						<MenuItem v-if="!item.subNavs" :name="'nav_' + item.id"> {{item.title}}
 						</MenuItem>
 						<Submenu v-else :name="'nav_' + item.id">

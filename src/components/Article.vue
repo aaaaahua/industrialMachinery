@@ -1,10 +1,21 @@
 <template>
 	<section style="width: 100%;">
-		<section class="leftTextarea">
-			<h1 class="newsCenter">新闻中心</h1>
-			<h2 class="newsTitle">结束塑料污染 – 印度</h2>
-			<p class="newsText">在Walsn印度，我们针对本年度地球日活动主题 – 结束塑料污染，组织了一次公益讲座。 活动地址位于Ikebana 居民社区会馆。该社区20位居民参加了本次讲座，并在讲座积极讨论了关于塑料垃圾对人类带来的危害，以及如何开始从个人做起，减少塑料垃圾感谢大家积极参与！</p>
+		<section v-if="articles.length > 1" class="leftTextarea" style="padding:24px;">
+			<h1 class="newsCenter">{{title1}}</h1>
+			<Timeline>
+				<TimelineItem v-for="article in articles" :key="article.id">
+					<router-link class="time" :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
+				</TimelineItem>
+			</Timeline>
+			
 		</section>
+
+		<section v-else class="leftTextarea">
+			<h1 class="newsCenter">{{title1}}</h1>
+			<h2 class="newsTitle">{{articles[0].title}}</h2>
+			<p class="newsText">{{articles[0].content}}</p>
+		</section>
+
 		<section class="rightInfo">
 			<section class="rightInfoTable">
 				<section class="rightInfoTableImg">
@@ -28,11 +39,39 @@
 
 <script>
 	export default {
-		name: 'HelloWorld',
+		name: 'Article',
 		data() {
 			return {
-				msg: 'Welcome to Your Vue.js App'
+				articles: [],
+				mapNavs: [],
+				title1: "",
 			}
+		},
+		mounted(){
+			this.$http.get("api/nav/all").then((res) => {
+				var result = res.body;
+				if(result) {
+					let map = new Map();
+					for(let nav of result){
+						if(nav.id == this.$route.params.id) this.title1 = nav.title;
+						map.set(nav.id, JSON.stringify(nav));
+					}
+
+					this.mapNavs = map;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+
+			
+			this.$http.get("api/article/nav?id=" + this.$route.params.id).then((res) => {
+				var result = res.body;
+				if(result) {
+					this.articles = result;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
 		}
 	}
 </script>
