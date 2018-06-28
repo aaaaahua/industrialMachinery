@@ -3,9 +3,13 @@
 		<nav>
 			<img src="../static/logo1.png" class="logoPos">
 			<img src="../static/logo2.png" class="logoPos">
+			<ul style="float: right;list-style:none;margin-top:24px;">
+				<li style="float: right;padding-left:12px;font-size:20px;line-height:20px;"><router-link to="">ᠮᠣᠩᠭᠣᠯ ᠤᠢᠰᠦᠭ</router-link></li>
+				<li style="float: right;padding-right:12px;border-right:1px solid gray;"><router-link to="">English</router-link></li>
+			</ul>
 			<Menu mode="horizontal" class="navMenu" active-name="nav_1">
 				<div v-for="item in navList" :key="'nav_' + item.id">
-					<router-link :to="item.needJump ? item.jumpUrl : 'article/1'" >
+					<router-link :to="item.needJump ? item.jumpUrl : '/article/'+ item.id" >
 						<MenuItem v-if="!item.subNavs" :name="'nav_' + item.id"> {{item.title}}
 						</MenuItem>
 						<Submenu v-else :name="'nav_' + item.id">

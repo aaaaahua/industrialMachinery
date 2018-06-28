@@ -19,11 +19,26 @@
 					<Input v-model="formArticle.title" placeholder="请输入标题..."></Input>
 				</FormItem>
 				<FormItem label="所属菜单">
-					<Select v-model="formArticle.navId" style="width:240px">
-						<Option v-for="nav in navs" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
+					<Select v-model="selectNavs1" style="width:240px">
+						<Option v-for="nav in navs1" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
+					</Select>
+
+					<Select v-model="selectNavs2" style="width:240px" v-if="navs2">
+						<Option v-for="nav in navs2" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
 					</Select>
 				</FormItem>
 				<editor id="tinymce" v-model="formArticle.content" :init= "initEditor" ></editor>
+
+			</Form>
+		</Modal>
+
+		<Modal v-model="modalEditArticle" title="编辑文章" width="1000" @on-ok="editArticleSubmit">
+			<Form ref="formArticleEdit" :model="formArticleEdit" :label-width="60">
+				<FormItem label="文章标题">
+					<Input v-model="formArticleEdit.title" placeholder="请输入标题..."></Input>
+				</FormItem>
+				
+				<editor id="tinymce2" v-model="formArticleEdit.content" :init= "initEditor" ></editor>
 
 			</Form>
 		</Modal>
@@ -39,6 +54,13 @@
 		components:{ Editor },
 		data() {
 			return {
+				modalEditArticle: false,
+				formArticleEdit: {},
+				mapNavs: null,
+				navs1: [],
+				navs2: null,
+				selectNavs1: 0,
+				selectNavs2: 0,
 				textHtml: "",
 				initEditor: {
 					language_url: 'static/zh_CN.js',
@@ -80,7 +102,6 @@
 				article: {},
 				modalAddArticle: false,
 				formArticle: {},
-				navs: [],
 			}
 		},
 		mounted() {
@@ -90,7 +111,13 @@
 			this.$http.get("api/nav/all").then((res) => {
 				var result = res.body;
 				if(result) {
-					this.navs = result;
+					this.navs1 = result;
+					let map = new Map();
+					for(let nav of result){
+						map.set(nav.id, JSON.stringify(nav));
+					}
+
+					this.mapNavs = map;
 				} else {
 					this.$Message.error("网络异常");
 				}
@@ -111,6 +138,22 @@
 					var result = res.body;
 					if(result.success) {
 						this.$Message.success("添加成功");
+						this.$nextTick(()=>{
+							this.$router.go();
+						});
+					} else {
+						this.$Message.error("网络异常");
+					}
+				});
+			},
+			editArticleSubmit() {
+				this.$http.put("api/article/fix", this.formArticleEdit).then((res) => {
+					var result = res.body;
+					if(result) {
+						this.$Message.success("修改成功");
+						this.$nextTick(()=>{
+							this.$router.go();
+						});
 					} else {
 						this.$Message.error("网络异常");
 					}
@@ -136,7 +179,8 @@
 						width: 120,
 						align: 'center',
 						render: (h, params) => {
-							return h('div', params.row.navId);
+							let nav = JSON.parse(this.mapNavs.get(params.row.navId));
+							return h('div', nav.title);
 						}
 					},
 					{
@@ -190,9 +234,8 @@
 									},
 									on: {
 										click: () => {
-											// params.row.needJump = params.row.needJump.toString();
-											// this.fixNavForm = params.row;
-											// this.modalFixNav = true;
+											this.modalEditArticle = true;
+											this.formArticleEdit = params.row;
 										}
 									}
 								}, '修改'),

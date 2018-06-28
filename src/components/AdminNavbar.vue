@@ -96,7 +96,7 @@
 				columns2: [],
 				activeNav: null, // 当前激活的一级菜单
 				comfirmDel: false,
-				CurrData: [],
+				CurrData: [],    
 				addNavbar: false,
 			}
 		},
