@@ -13,14 +13,14 @@
 			<div v-html="article.content"></div>
 		</Modal>
 
-		<Modal v-model="modalAddArticle" title="新增文章" width="1000">
+		<Modal v-model="modalAddArticle" title="新增文章" width="1000" @on-ok="addArticleSubmit">
 			<Form ref="formArticle" :model="formArticle" :label-width="60">
 				<FormItem label="文章标题">
 					<Input v-model="formArticle.title" placeholder="请输入标题..."></Input>
 				</FormItem>
 				<FormItem label="所属菜单">
 					<Select v-model="formArticle.navId" style="width:240px">
-						<Option v-for="item in nav" :value="item.value" :key="item.value">{{ item.label }}</Option>
+						<Option v-for="nav in navs" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
 					</Select>
 				</FormItem>
 				<editor id="tinymce" v-model="formArticle.content" :init= "initEditor" ></editor>
@@ -80,11 +80,21 @@
 				article: {},
 				modalAddArticle: false,
 				formArticle: {},
+				navs: [],
 			}
 		},
 		mounted() {
 			this.initColumn();
 			tinymce.init({});
+
+			this.$http.get("api/nav/all").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.navs = result;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
 
 			this.$http.get("api/article/all").then((res) => {
 				var result = res.body;
@@ -96,6 +106,16 @@
 			});
 		},
 		methods: {
+			addArticleSubmit() {
+				this.$http.post("api/article/add", this.formArticle).then((res) => {
+					var result = res.body;
+					if(result.success) {
+						this.$Message.success("添加成功");
+					} else {
+						this.$Message.error("网络异常");
+					}
+				});
+			},
 			initColumn() {
 				// 表格
 				this.columns1 = [{
@@ -125,7 +145,7 @@
 						width: 150,
 						align: 'center',
 						render: (h, params) => {
-							return h('div', params.row.gmtCreate);
+							return h('div', new Date(params.row.gmtCreate * 1000).Format("yyyy-MM-dd hh:mm:ss"));
 						}
 					},
 					{
@@ -133,7 +153,7 @@
 						key: 'gmtModified',
 						width: 150,
 						render: (h, params) => {
-							return h('div', params.row.gmtModified);
+							return h('div', new Date(params.row.gmtModified * 1000).Format("yyyy-MM-dd hh:mm:ss"));
 						}
 					},
 					{

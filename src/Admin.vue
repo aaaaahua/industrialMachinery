@@ -5,22 +5,28 @@
 		</div>
 		<Menu :theme="theme3" active-name="1" class="adminNavbar">
 			<MenuGroup title="网站管理">
-				<MenuItem name="1">
-				<Icon type="navicon-round"></Icon>
-				<router-link to="/Admin/adminNavbar/" style="color: white;">导航栏管理</router-link>
-				</MenuItem>
+				<router-link to="/Admin/adminNavbar/" style="color: white;">
+					<MenuItem name="1">
+					<Icon type="navicon-round"></Icon>
+					导航栏管理
+					</MenuItem>
+				</router-link>
 			</MenuGroup>
 			<MenuGroup title="内容管理">
-				<MenuItem name="2">
-					<Icon type="document-text"></Icon>
-					<router-link to="/Admin/adminArticle/" style="color: white;">文章管理</router-link>
-				</MenuItem>
+				<router-link to="/Admin/adminArticle/" style="color: white;">
+					<MenuItem name="2">
+						<Icon type="document-text"></Icon>
+						文章管理
+					</MenuItem>
+				</router-link>
 			</MenuGroup>
 			<MenuGroup title="评价管理">
-				<MenuItem name="3">
-					<Icon type="heart"></Icon>
-					<router-link to="/Admin/adminNote/" style="color: white;">意见反馈</router-link>
-				</MenuItem>
+				<router-link to="/Admin/adminNote/" style="color: white;">
+					<MenuItem name="3">
+						<Icon type="heart"></Icon>
+						意见反馈
+					</MenuItem>
+				</router-link>
 			</MenuGroup>
 		</Menu>
 		<div class="adminContent">
