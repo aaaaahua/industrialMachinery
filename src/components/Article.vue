@@ -13,6 +13,7 @@
 		<section v-else-if="articles.length == 1" class="leftTextarea"  style="padding:24px;">
 			<h1 class="newsCenter">{{title1}}</h1>
 			<h2 class="newsTitle">{{articles[0].title}}</h2>
+			<br>
 			<p class="newsText" v-html="articles[0].content"></p>
 		</section>
 

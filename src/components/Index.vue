@@ -20,27 +20,19 @@
 		</Collapse>
 		<div style="clear: both"></div>
 		<section class="indexSection">
-			<h3>新闻中心<router-link to="article/"><span>更多>></span></router-link></h3>
+			<h3>新闻中心<router-link to="/article/28"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<img src="../../static/news.gif" />
 				<ul>
-					<li>结束塑料污染 – 印度结束塑</li>
-					<li>结束塑料污染 – 印度结束塑料</li>
-					<li>结束塑料污染 – 印度</li>
-					<li>结束塑料污染 – 印度</li>
-					<li>结束塑料污染 – 印度</li>
-					<li>结束塑料污染 – 印度</li>
-					<li>结束塑料污染 – 印度</li>
+					<li v-for="article in newsArticle" :key="article.id"><router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link></li>
 				</ul>
 			</div>
 		</section>
 		<section class="indexSection">
-			<h3>关于我们<span>更多>></span></h3>
+			<h3>关于我们<router-link to="/article/18"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<Card style="width:302px">
-					<div style="text-align:center">
-						<img src="../../static/logo1.png">
-						<h3>A high quality UI Toolkit based on Vue.js</h3>
+					<div style="text-align:center;" v-html="aboutMeArticle[0].content">
 					</div>
 				</Card>
 			</div>
@@ -67,6 +59,8 @@
 				carouselIndex: 0,
 				valueChanpin: '1',
 				listChanPin: [],
+				newsArticle: [],
+				aboutMeArticle: []
 			}
 		},
 		mounted(){
@@ -75,6 +69,24 @@
 				if(result) {
 					this.listChanPin = result;
 					this.valueChanpin = 'chanpin_' + result[0].id
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+
+			this.$http.get("api/article/nav?id=28").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.newsArticle = result;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+
+			this.$http.get("api/article/nav?id=18").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.aboutMeArticle = result;
 				} else {
 					this.$Message.error("网络异常");
 				}
