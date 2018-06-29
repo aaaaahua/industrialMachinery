@@ -4,6 +4,7 @@ import App from '@/App'
 import Admin from '@/Admin'
 import SiderIndex from '@/SiderIndex'
 import Article from '@/components/Article'
+import ArticleDetail from '@/components/ArticleDetail'
 import Index from '@/components/Index'
 import UserSuggestions from '@/components/UserSuggestions'
 import AdminArticle from '@/components/AdminArticle'
@@ -17,7 +18,7 @@ export default new Router({
 			path: '/',
 			component: App,
 			children: [{
-					path: '/',
+					path: '',
 					component: Index
 				},
 				{
@@ -25,7 +26,11 @@ export default new Router({
 					component: Article
 				},
 				{
-					path: 'UserSuggestions/',
+					path: 'articleDetail/:id',
+					component: ArticleDetail
+				},
+				{
+					path: 'UserSuggestions',
 					component: UserSuggestions
 				},
 			]
@@ -34,15 +39,15 @@ export default new Router({
 			path: '/Admin/',
 			component: Admin,
 			children: [{
-					path: 'adminArticle/',
+					path: 'adminArticle',
 					component: AdminArticle
 				},
 				{
-					path: 'adminNavbar/',
+					path: 'adminNavbar',
 					component: AdminNavbar
 				},
 				{
-					path: 'adminNote/',
+					path: 'adminNote',
 					component: AdminNote
 				},
 			]

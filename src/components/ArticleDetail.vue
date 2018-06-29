@@ -1,23 +1,11 @@
 <template>
 	<section style="width: 100%;">
-		<section v-if="articles.length > 1" class="leftTextarea" style="padding:24px;">
-			<h1 class="newsCenter">{{title1}}</h1>
-			<Timeline>
-				<TimelineItem v-for="article in articles" :key="article.id">
-					<router-link class="time" :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
-				</TimelineItem>
-			</Timeline>
-			
-		</section>
 
-		<section v-else-if="articles.length == 1" class="leftTextarea"  style="padding:24px;">
-			<h1 class="newsCenter">{{title1}}</h1>
-			<h2 class="newsTitle">{{articles[0].title}}</h2>
-			<p class="newsText" v-html="articles[0].content"></p>
-		</section>
-
-		<section v-else class="leftTextarea"  style="padding:24px;">
-			<h1 class="newsCenter">{{title1}}</h1>
+		<section class="leftTextarea"  style="padding:24px;">
+			<!-- <h1 class="newsCenter">{{title1}}</h1> -->
+			<h2 class="newsTitle">{{article.title}}</h2>
+			<br>
+			<p class="newsText" v-html="article.content"></p>
 		</section>
 
 		<section class="rightInfo">
@@ -46,7 +34,7 @@
 		name: 'Article',
 		data() {
 			return {
-				articles: [],
+				article: {},
 				mapNavs: [],
 				title1: "",
 			}
@@ -55,29 +43,14 @@
 			
 
 			
-			this.getArticles();
+			this.getArticle();
 		},
 		methods:{
-			getArticles(){
-				this.$http.get("api/nav/all").then((res) => {
+			getArticle(){
+				this.$http.get("api/article/info?id=" + this.$route.params.id).then((res) => {
 					var result = res.body;
 					if(result) {
-						let map = new Map();
-						for(let nav of result){
-							if(nav.id == this.$route.params.id) this.title1 = nav.title;
-							map.set(nav.id, JSON.stringify(nav));
-						}
-
-						this.mapNavs = map;
-					} else {
-						this.$Message.error("网络异常");
-					}
-				});
-
-				this.$http.get("api/article/nav?id=" + this.$route.params.id).then((res) => {
-					var result = res.body;
-					if(result) {
-						this.articles = result;
+						this.article = result;
 					} else {
 						this.$Message.error("网络异常");
 					}
@@ -85,7 +58,7 @@
 			}
 		},
 		watch:{
-			"$route": "getArticles"
+			"$route": "getArticle"
 		}
 	}
 </script>

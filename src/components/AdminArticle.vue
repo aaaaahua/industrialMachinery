@@ -20,7 +20,7 @@
 				</FormItem>
 				<FormItem label="所属菜单">
 					<Select v-model="selectNavs1" style="width:240px">
-						<Option v-for="nav in navs1" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
+						<Option v-if="nav.needJump == false" v-for="nav in navs1" :value="nav.id" :key="nav.id">{{ nav.title }}</Option>
 					</Select>
 
 					<Select v-model="selectNavs2" style="width:240px" v-if="navs2">
@@ -101,7 +101,9 @@
 				modal1: false,
 				article: {},
 				modalAddArticle: false,
-				formArticle: {},
+				formArticle: {
+					deleted: false
+				},
 			}
 		},
 		mounted() {
@@ -134,6 +136,8 @@
 		},
 		methods: {
 			addArticleSubmit() {
+				this.formArticle.navId = this.selectNavs1;
+
 				this.$http.post("api/article/add", this.formArticle).then((res) => {
 					var result = res.body;
 					if(result.success) {
@@ -179,6 +183,7 @@
 						width: 120,
 						align: 'center',
 						render: (h, params) => {
+							if(this.mapNavs == null) return;
 							let nav = JSON.parse(this.mapNavs.get(params.row.navId));
 							return h('div', nav.title);
 						}
