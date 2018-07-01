@@ -12,19 +12,26 @@
 			</CarouselItem>
 		</Carousel>
 		<div class="indexTitle">公司产品</div>
-		<Collapse v-model="valueChanpin" accordion style="width: 314px;float: left;">
+		<div class="companyProductList">
+			<ul class="companyProduct" v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id">
+				<li><i class="ivu-icon ivu-icon-arrow-right-b"></i><span>{{chanpin.title}}</span></li>
+			</ul>
+		</div>
+		<!--<Collapse v-model="valueChanpin" accordion style="width: 314px;float: left;">
 			<Panel v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id">
 				{{chanpin.title}}
-				<p slot="content" v-html="chanpin.content"></p>
+				<p slot="content" v-html="chanpin.content" style="max-height: 62px;overflow-y: scroll"></p>
 			</Panel>
-		</Collapse>
+		</Collapse>-->
 		<div style="clear: both"></div>
 		<section class="indexSection">
 			<h3>新闻中心<router-link to="/article/28"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<img src="../../static/news.gif" />
 				<ul>
-					<li v-for="article in newsArticle" :key="article.id"><router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link></li>
+					<li v-for="article in newsArticle" :key="article.id">
+						<router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
+					</li>
 				</ul>
 			</div>
 		</section>
@@ -32,7 +39,7 @@
 			<h3>关于我们<router-link to="/article/18"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<Card style="width:302px">
-					<div style="text-align:center;" v-html="aboutMeArticle[0].content">
+					<div class="aboutUs" style="text-align:justify;height: 130px;overflow: hidden;" v-html="aboutMeArticle[0].content">
 					</div>
 				</Card>
 			</div>
@@ -63,7 +70,7 @@
 				aboutMeArticle: []
 			}
 		},
-		mounted(){
+		mounted() {
 			this.$http.get("api/article/nav?id=21").then((res) => {
 				var result = res.body;
 				if(result) {
@@ -99,6 +106,46 @@
 <style scoped>
 	li {
 		list-style: none;
+	}
+
+	.companyProduct:nth-child(2n+1) {
+		background-color: #f7f7f7;
+		border-radius: 3px;
+		border: 1px solid #dddee1;
+		width: 314px;
+		float: left;
+	}
+	
+	.companyProduct:last-child {
+		background-color: #f7f7f7;
+		border-radius: 3px;
+		border: 1px solid #dddee1;
+		width: 314px;
+		float: left;
+		border-top: none;
+	}
+	
+	.companyProduct {
+		background-color: #f7f7f7;
+		border-radius: 3px;
+		border: 1px solid #dddee1;
+		width: 314px;
+		float: left;
+		border-bottom: none;
+		border-top: none;
+	}
+	
+	.companyProduct li {
+		height: 38px;
+		line-height: 38px;
+		padding-left: 32px;
+		color: #666;
+		cursor: pointer;
+		position: relative;
+	}
+	
+	.companyProduct li span {
+		padding: 0px 6px;
 	}
 	
 	.indexTitle {
