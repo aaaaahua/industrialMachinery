@@ -22,21 +22,8 @@
 		</section>
 
 		<section class="rightInfo">
-			<section class="rightInfoTable">
-				<section class="rightInfoTableImg">
-					<img src="../../static/suggest.gif" class="suggestImg" />
-				</section>
-				<section class="rightInfoTableText">
-					<h3 style="text-align: center;">Walsn中国（北京）代表处</h3>
-					<section style="padding-left: 15px;">
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-					</section>
-				</section>
+			<section class="rightInfoTable" v-html="sideBox.data">
+
 			</section>
 		</section>
 	</section>
@@ -50,11 +37,19 @@
 				articles: [],
 				mapNavs: [],
 				title1: "",
+				sideBox: {},
 			}
 		},
 		mounted(){
 			
-
+			this.$http.get("api/config/info?key=sidebox").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.sideBox = result.data;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
 			
 			this.getArticles();
 		},

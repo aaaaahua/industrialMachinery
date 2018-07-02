@@ -147,12 +147,9 @@
 							this.$localStorage.set("token", result.data);
 							this.$Message.info("登录成功");
 							
-							let url = this.$router.resolve({
+							let url = this.$router.push({
 								path: '/Admin/adminNavbar/'
 							});
-
-							window.open(url.href, '_blank');
-
 						});
 					})
 					.catch((err) => {
