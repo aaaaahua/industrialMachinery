@@ -9,7 +9,7 @@
 		<Table border :columns="columns1" :data="data1"></Table>
 		<br>
 
-		<Modal v-model="modal1" :title="article.title">
+		<Modal v-model="modal1" :title="article.title" width="75">
 			<div v-html="article.content"></div>
 		</Modal>
 
@@ -49,6 +49,12 @@
 	import 'tinymce/themes/modern/theme'
 	import Editor from '@tinymce/tinymce-vue'
 	import 'tinymce/plugins/image'
+	import 'tinymce/plugins/fullscreen'
+	import 'tinymce/plugins/table'
+	import 'tinymce/plugins/textcolor'
+	import 'tinymce/plugins/media'
+	import 'tinymce/plugins/advlist'
+	import 'tinymce/plugins/charmap'
 
 	export default {
 		components:{ Editor },
@@ -67,7 +73,8 @@
 					language: 'zh_CN',
 					skin_url: 'static/skins/lightgray',
 					height: 300,
-					plugins:"image",
+					plugins:"image fullscreen table textcolor media advlist charmap",
+					toolbar1:"formatselect fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat",
 					images_upload_handler: (blobInfo, success, failure) => {
 						var xhr, formData;
 						var token = this.$localStorage.get("token");

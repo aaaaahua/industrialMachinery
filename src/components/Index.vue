@@ -14,7 +14,7 @@
 		<div class="indexTitle">公司产品</div>
 		<div class="companyProductList">
 			<ul class="companyProduct" v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id">
-				<li><i class="ivu-icon ivu-icon-arrow-right-b"></i><span>{{chanpin.title}}</span></li>
+				<li><i class="ivu-icon ivu-icon-arrow-right-b"></i><span><router-link :to="'/articleDetail/'+chanpin.id">{{chanpin.title}}</router-link></span></li>
 			</ul>
 		</div>
 		<!--<Collapse v-model="valueChanpin" accordion style="width: 314px;float: left;">
@@ -27,7 +27,7 @@
 		<section class="indexSection">
 			<h3>新闻中心<router-link to="/article/28"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
-				<img src="../../static/news.gif" />
+				<img src="../../static/news.gif" style="width:64px;height:64px;" />
 				<ul>
 					<li v-for="article in newsArticle" :key="article.id">
 						<router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
@@ -36,10 +36,10 @@
 			</div>
 		</section>
 		<section class="indexSection">
-			<h3>关于我们<router-link to="/article/18"><span>更多>></span></router-link></h3>
+			<h3>关于我们<router-link to="/article/18"><span>详情>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<Card style="width:302px">
-					<div class="aboutUs" style="text-align:justify;height: 130px;overflow: hidden;" v-html="aboutMeArticle[0].content">
+					<div class="aboutUs" style="text-align:justify;height: 130px;overflow: hidden;" v-if="aboutMeArticle || aboutMeArticle.length > 0" v-html="aboutMeArticle[0] ? aboutMeArticle[0].content : ''">
 					</div>
 				</Card>
 			</div>
@@ -197,7 +197,7 @@
 	
 	.indexSectionContent ul {
 		display: inline-block;
-		width: 60%;
+		width: 70%;
 		margin-left: 5%;
 	}
 	

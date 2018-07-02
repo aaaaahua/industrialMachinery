@@ -1,8 +1,8 @@
 <template>
 	<div id="app" class="common">
 		<nav>
-			<img src="../static/logo1.png" class="logoPos">
-			<img src="../static/logo2.png" class="logoPos">
+			<span class="config" v-html="logo.data" @click="modalLogin = true"></span>
+			
 			<ul style="float: right;list-style:none;margin-top:24px;">
 				<li style="float: right;padding-left:12px;font-size:20px;line-height:20px;"><router-link to="">ᠮᠣᠩᠭᠣᠯ ᠤᠢᠰᠦᠭ</router-link></li>
 				<li style="float: right;padding-right:12px;border-right:1px solid gray;"><router-link to="">English</router-link></li>
@@ -27,8 +27,7 @@
 		</div>
 		<footer>
 			<div class="footer">
-				Copyright © Walsn Enterprises Ltd. All rights reserved. 京ICP备12041454号. 京公网安备11010802014942
-				<img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif" @click="modalLogin = true">
+				<span v-html="copyright.data"></span>
 			</div>
 		</footer>
 
@@ -83,6 +82,10 @@
 					account: "",
 					password: ""
 				},
+				copyright:{
+
+				},
+				logo:{}
 			}
 		},
 		mounted() {
@@ -90,6 +93,24 @@
 				var result = res.body;
 				if(result) {
 					this.navList = result;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+
+			this.$http.get("api/config/info?key=copyright").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.copyright = result.data;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+
+			this.$http.get("api/config/info?key=logo").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.logo = result.data;
 				} else {
 					this.$Message.error("网络异常");
 				}
@@ -125,31 +146,13 @@
 							// 储存token
 							this.$localStorage.set("token", result.data);
 							this.$Message.info("登录成功");
-							this.$router.push({
+							
+							let url = this.$router.resolve({
 								path: '/Admin/adminNavbar/'
 							});
-							let header = {
-								"Authorization": "Bearer " + result.data
-							};
-							// 请求用户个人信息
-							this.$http.get("api/user/own/info", {
-									headers: header
-								})
-								.then((res) => {
-										let result = res.body;
-										if(result.success) {
-											this.$localStorage.set("user", JSON.stringify(result.data));
-											this.modalLogin = false;
-											this.user = this.fixUserInfo(result.data);
-											this.login = true;
-											this.$Message.info("登录成功");
-										} else {
-											reject(result.msg);
-										}
-									},
-									(err) => {
-										reject("网络异常");
-									});
+
+							window.open(url.href, '_blank');
+
 						});
 					})
 					.catch((err) => {
@@ -163,7 +166,17 @@
 		},
 	}
 </script>
+
+<style>
+.config p{
+	display: inline !important;
+}
+</style>
+
+
 <style scoped>
+
+
 	.common {
 		width: 960px;
 		margin: 12px auto;

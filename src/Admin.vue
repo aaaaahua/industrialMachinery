@@ -19,10 +19,16 @@
 						文章管理
 					</MenuItem>
 				</router-link>
+				<router-link to="/Admin/adminConfig/" style="color: white;">
+					<MenuItem name="3">
+						<Icon type="document-text"></Icon>
+						配置管理
+					</MenuItem>
+				</router-link>
 			</MenuGroup>
 			<MenuGroup title="评价管理">
 				<router-link to="/Admin/adminNote/" style="color: white;">
-					<MenuItem name="3">
+					<MenuItem name="4">
 						<Icon type="heart"></Icon>
 						意见反馈
 					</MenuItem>

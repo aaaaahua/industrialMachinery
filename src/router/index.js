@@ -10,6 +10,7 @@ import UserSuggestions from '@/components/UserSuggestions'
 import AdminArticle from '@/components/AdminArticle'
 import AdminNavbar from '@/components/AdminNavbar'
 import AdminNote from '@/components/AdminNote'
+import AdminConfig from '@/components/AdminConfig'
 
 Vue.use(Router)
 
@@ -49,6 +50,10 @@ export default new Router({
 				{
 					path: 'adminNote',
 					component: AdminNote
+				},
+				{
+					path: 'adminConfig',
+					component: AdminConfig
 				},
 			]
 		},
