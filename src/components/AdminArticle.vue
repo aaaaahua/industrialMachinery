@@ -42,6 +42,11 @@
 
 			</Form>
 		</Modal>
+
+		<!--//删除模态框-->
+		<Modal v-model="comfirmDel" title="删除提示" @on-ok="DelSure">
+			<p>确认删除？</p>
+		</Modal>
 	</div>
 </template>
 <script>
@@ -111,6 +116,8 @@
 				formArticle: {
 					deleted: false
 				},
+				comfirmDel: false,
+				delId : -1,
 			}
 		},
 		mounted() {
@@ -120,12 +127,24 @@
 			this.$http.get("api/nav/all").then((res) => {
 				var result = res.body;
 				if(result) {
-					this.navs1 = result;
+					let tempNavs = [];
 					let map = new Map();
 					for(let nav of result){
+						
+						if(nav.subNavs && nav.subNavs.length > 0){
+							for(let childNav of nav.subNavs){
+
+								tempNavs.push(childNav);
+								map.set(childNav.id, JSON.stringify(childNav));
+							}
+						}else{
+							tempNavs.push(nav);
+						}
+
 						map.set(nav.id, JSON.stringify(nav));
 					}
 
+					this.navs1 = tempNavs;
 					this.mapNavs = map;
 				} else {
 					this.$Message.error("网络异常");
@@ -142,6 +161,24 @@
 			});
 		},
 		methods: {
+			btnDel(CurrData) {
+				this.comfirmDel = true;
+				this.delId = CurrData.id;
+
+			},
+			DelSure() {
+				this.$http.delete("api/article/del?id="+this.delId).then((res) => {
+					var result = res.body;
+					if(result.success) {
+						this.$Message.success("删除成功");
+						this.$nextTick(()=>{
+							this.$router.go();
+						});
+					} else {
+						this.$Message.error("网络异常");
+					}
+				});
+			},
 			addArticleSubmit() {
 				this.formArticle.navId = this.selectNavs1;
 
@@ -258,8 +295,7 @@
 									},
 									on: {
 										click: () => {
-											// this.btnDel(params.row);
-
+											this.btnDel(params.row);
 										}
 									}
 								}, '删除')

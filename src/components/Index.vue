@@ -71,7 +71,7 @@
 			}
 		},
 		mounted() {
-			this.$http.get("api/article/nav?id=21").then((res) => {
+			this.$http.get("api/article/nav?id=32").then((res) => {
 				var result = res.body;
 				if(result) {
 					this.listChanPin = result;
@@ -90,7 +90,7 @@
 				}
 			});
 
-			this.$http.get("api/article/nav?id=18").then((res) => {
+			this.$http.get("api/article/nav?id=30").then((res) => {
 				var result = res.body;
 				if(result) {
 					this.aboutMeArticle = result;

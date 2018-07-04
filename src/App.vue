@@ -9,16 +9,20 @@
 			</ul>
 			<Menu mode="horizontal" class="navMenu" active-name="nav_1">
 				<div v-for="item in navList" :key="'nav_' + item.id">
-					<router-link :to="item.needJump ? item.jumpUrl : '/article/'+ item.id" >
-						<MenuItem v-if="!item.subNavs" :name="'nav_' + item.id"> {{item.title}}
+					<router-link v-if="!item.subNavs" :to="item.needJump ? item.jumpUrl : '/article/'+ item.id" >
+						<MenuItem  :name="'nav_' + item.id"> {{item.title}}
 						</MenuItem>
-						<Submenu v-else :name="'nav_' + item.id">
-							<template slot="title">
-								{{item.title}}
-							</template>
-							<MenuItem v-for="childNav in item.subNavs" :name="'childrenNav_' + childNav.title" :key="'childrenNav_' + childNav.title">{{childNav.title}}</MenuItem>
-						</Submenu>
 					</router-link>
+					<Submenu v-else :name="'nav_' + item.id">
+						<template slot="title">
+							{{item.title}}
+						</template>
+
+						<router-link v-for="childNav in item.subNavs" :key="'childrenNav_' + childNav.title" :to="childNav.needJump ? childNav.jumpUrl : '/article/'+ childNav.id" >
+							<MenuItem  :name="'childrenNav_' + childNav.title" >{{childNav.title}}</MenuItem>
+						</router-link>
+					</Submenu>
+					
 				</div>
 			</Menu>
 		</nav>
@@ -194,7 +198,9 @@
 		border-bottom: 2px solid rgb(37, 137, 189);
 	}
 
-	
+	.ivu-menu-submenu{
+		color: #FFFFFF!important;
+	}
 	
 	.footer {
 		height: 42px;

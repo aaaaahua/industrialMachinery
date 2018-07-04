@@ -2,6 +2,7 @@
 	<section style="width: 100%;">
 		<section v-if="articles.length > 1" class="leftTextarea" style="padding:24px;">
 			<h1 class="newsCenter">{{title1}}</h1>
+			<br>
 			<Timeline>
 				<TimelineItem v-for="article in articles" :key="article.id">
 					<router-link class="time" :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
@@ -58,9 +59,19 @@
 				this.$http.get("api/nav/all").then((res) => {
 					var result = res.body;
 					if(result) {
+
 						let map = new Map();
 						for(let nav of result){
 							if(nav.id == this.$route.params.id) this.title1 = nav.title;
+
+							if(nav.subNavs && nav.subNavs.length > 0){
+								for(let childNav of nav.subNavs){
+									if(childNav.id == this.$route.params.id) this.title1 = childNav.title;
+
+									map.set(childNav.id, JSON.stringify(childNav));
+								}
+							}
+
 							map.set(nav.id, JSON.stringify(nav));
 						}
 
