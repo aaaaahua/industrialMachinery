@@ -3,7 +3,7 @@
 		<nav>
 			<span class="config" v-html="logo.data" @click="modalLogin = true"></span>
 			
-			<ul style="float: right;list-style:none;margin-top:24px;">
+			<ul style="float: right;list-style:none;margin-top:24px;margin-right:72px;">
 				<li style="float: right;padding-left:12px;font-size:20px;line-height:20px;"><router-link to="">ᠮᠣᠩᠭᠣᠯ ᠤᠢᠰᠦᠭ</router-link></li>
 				<li style="float: right;padding-right:12px;border-right:1px solid gray;"><router-link to="">English</router-link></li>
 			</ul>
@@ -171,6 +171,7 @@
 <style>
 .config p{
 	display: inline !important;
+	margin-left: 128px;
 }
 </style>
 
@@ -179,39 +180,48 @@
 
 
 	.common {
-		width: 960px;
-		margin: 12px auto;
+		width: 100%;
+		margin-top: 16px;
 		height: 100%;
 	}
 	
 	.navMenu {
 		background: linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
-		height: 50px;
-		line-height: 50px;	
+		height: 64px;
+		line-height: 64px;	
+		padding-left: 72px;
+		font-size: 14px;
 	}
 	
 	.navMenu div>a>li {
 		color: #FFFFFF!important;
+		margin-left:20px;
+		width: 144px;
+		text-align: center;
 	}
 
 	.ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
 		border-bottom: 2px solid rgb(37, 137, 189);
+		
 	}
 
 	.ivu-menu-submenu{
 		color: #FFFFFF!important;
+		margin-left:20px;
+		width: 144px;
+		text-align: center;
 	}
 	
 	.footer {
-		height: 42px;
+		height: 64px;
 		width: 100%;
 		margin: 0 auto;
-		padding: 10px 0;
-		line-height: 24px;
+		line-height: 64px;
 		text-align: center;
 		background:linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
 		color: #FFF;
 		font-weight: 300;
+		font-size: 15px;
 		box-shadow: 2px 2px 4px rgb(37, 137, 189);
 	}
 </style>

@@ -1,24 +1,24 @@
 <template>
 	<section style="width: 100%;">
-		<section v-if="articles.length > 1" class="leftTextarea" style="padding:24px;">
+		<section v-if="articles.length > 1" class="leftTextarea">
 			<h1 class="newsCenter">{{title1}}</h1>
 			<br>
 			<Timeline>
-				<TimelineItem v-for="article in articles" :key="article.id">
-					<router-link class="time" :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
+				<TimelineItem v-for="article in articles" :key="article.id" >
+					<router-link class="time" :to="'/articleDetail/'+article.id"  style="font-size:15px;">{{article.title}}</router-link>
 				</TimelineItem>
 			</Timeline>
 			
 		</section>
 
-		<section v-else-if="articles.length == 1" class="leftTextarea"  style="padding:24px;">
+		<section v-else-if="articles.length == 1" class="leftTextarea">
 			<h1 class="newsCenter">{{title1}}</h1>
 			<h2 class="newsTitle">{{articles[0].title}}</h2>
 			<br>
 			<p class="newsText" v-html="articles[0].content"></p>
 		</section>
 
-		<section v-else class="leftTextarea"  style="padding:24px;">
+		<section v-else class="leftTextarea">
 			<h1 class="newsCenter">{{title1}}</h1>
 		</section>
 
@@ -101,11 +101,11 @@
 <style scoped>
 	.newsCenter {
 		border-bottom: 1px solid #666666;
-		width: 625px;
+		width: 100%;
 		margin-bottom: 10px;
-		padding: 2px 0px;
+		padding: 2px px;
 		color: #627C19;
-		font-size: 16px;
+		font-size:20px;
 	}
 	
 	.newsTitle {
@@ -118,9 +118,11 @@
 	}
 	
 	.leftTextarea {
-		width: 625px;
+		width: 65%;
 		display: inline-block;
 		vertical-align: top;
+		padding: 24px 128px;
+		min-height: 750px;
 	}
 	
 	.suggestImg {
@@ -130,21 +132,18 @@
 	}
 	
 	.rightInfo {
-		width: 330px;
+		width: 30%;
 		display: inline-block;
+		min-height: 750px;
 	}
 	
 	.rightInfoTable {
 		margin-left: 130px;
 		background-color: #eee;
-		width: 200px;
+		width: 320px;
 		float: right;
-		padding-bottom: 20%
-	}
-	
-	.rightInfoTableImg {
-		margin: 0px auto;
-		width: 170px;
+		padding-bottom: 20%;
+		min-height: 750px;
 	}
 	
 	.rightInfoTableText {

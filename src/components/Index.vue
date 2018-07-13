@@ -1,6 +1,6 @@
 <template>
 	<div id="Index">
-		<Carousel style="width: 640px;float: right;" autoplay v-model="carouselIndex" loop>
+		<Carousel  v-model="carouselIndex" loop radius-dot height="480">
 			<CarouselItem>
 				<div class="demo-carousel"><img src="../../static/Carousel1.jpg"></div>
 			</CarouselItem>
@@ -11,11 +11,23 @@
 				<div class="demo-carousel"><img src="../../static/Carousel3.jpg"></div>
 			</CarouselItem>
 		</Carousel>
-		<div class="indexTitle">公司产品</div>
-		<div class="companyProductList">
-			<ul class="companyProduct" v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id">
-				<li><i class="ivu-icon ivu-icon-arrow-right-b"></i><span><router-link :to="'/articleDetail/'+chanpin.id">{{chanpin.title}}</router-link></span></li>
-			</ul>
+		<br>
+		<br>
+		<div class="indexTitle">&nbsp;公司产品<router-link to="/article/32"><span>查看全部 >>&nbsp;&nbsp;&nbsp;</span></router-link></div>
+		<div class="companyProductList" style="padding-left:72px;">
+			<Row>
+				<Col :md="7" :lg="7" v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id" style="margin-left:24px;">
+					<Card style="width:100%;margin-top:12px;" >
+						<p slot="title">
+							<Icon type="ionic"></Icon>
+							{{chanpin.title}}
+						</p>
+						<div class="aboutUs" v-html="chanpin.content">
+						</div>
+					</Card>
+				</Col>
+			</Row>
+			
 		</div>
 		<!--<Collapse v-model="valueChanpin" accordion style="width: 314px;float: left;">
 			<Panel v-for="chanpin in listChanPin" :name="'chanpin_' + chanpin.id" :key="chanpin.id">
@@ -23,28 +35,23 @@
 				<p slot="content" v-html="chanpin.content" style="max-height: 62px;overflow-y: scroll"></p>
 			</Panel>
 		</Collapse>-->
-		<div style="clear: both"></div>
+		<div style="clear: both;height:24px;"></div>
 		<section class="indexSection">
-			<h3>新闻中心<router-link to="/article/28"><span>更多>></span></router-link></h3>
+			<h3>新闻中心<router-link to="/article/28"><span>更多 >>&nbsp;</span></router-link></h3>
 			<div class="indexSectionContent">
-				<img src="../../static/news.gif" style="width:64px;height:64px;" />
-				<ul>
-					<li v-for="article in newsArticle" :key="article.id">
-						<router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link>
-					</li>
-				</ul>
+				<br>
+				<img src="../../static/news.gif" style="width:128px;height:128px;" />
+				<Timeline>
+					<TimelineItem v-for="article in newsArticle" :key="article.id" color="blue"><router-link :to="'/articleDetail/'+article.id">{{article.title}}</router-link></TimelineItem>
+				</Timeline>
 			</div>
 		</section>
 		<section class="indexSection">
-			<h3>关于我们<router-link to="/article/18"><span>详情>></span></router-link></h3>
-			<div class="indexSectionContent">
-				<Card style="width:302px">
-					<div class="aboutUs" style="text-align:justify;height: 130px;overflow: hidden;" v-if="aboutMeArticle || aboutMeArticle.length > 0" v-html="aboutMeArticle[0] ? aboutMeArticle[0].content : ''">
-					</div>
-				</Card>
+			<h3>关于我们<router-link to="/article/18"><span>详情 >>&nbsp;</span></router-link></h3>
+			<div class="indexSectionContent" v-html="aboutMeArticle[0] ? aboutMeArticle[0].content : ''">
 			</div>
 		</section>
-		<section class="indexSection">
+		<!-- <section class="indexSection">
 			<h3>联系我们<router-link to="UserSuggestions/"><span>更多>></span></router-link></h3>
 			<div class="indexSectionContent">
 				<h3>怡风科技</h3>
@@ -54,7 +61,7 @@
 				<p>邮箱：service@walsn.com</p>
 				<p>地址：厦门市思明区北京市朝阳区望京东路6号 望京国际研发园三期</p>
 			</div>
-		</section>
+		</section> -->
 	</div>
 </template>
 
@@ -108,6 +115,11 @@
 		list-style: none;
 	}
 
+	.aboutUs img {
+		width: 100% !important;
+		height: auto;
+	}
+
 	.companyProduct:nth-child(2n+1) {
 		background-color: #f7f7f7;
 		border-radius: 3px;
@@ -147,41 +159,63 @@
 	.companyProduct li span {
 		padding: 0px 6px;
 	}
+
+	.aboutUs{
+		overflow: hidden;
+		text-align: justify;
+		height: 325px;
+	}
 	
 	.indexTitle {
-		height: 40px;
-		width: 314px;
+		height: 48px;
+		width: 95.5%;
 		background: linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
 		color: #FFFFFF;
 		font-size: large;
-		text-align: center;
-		line-height: 40px;
+		text-align: left;
+		line-height: 48px;
+		padding-left: 18px;
+		margin-left:2.5%;
+	}
+
+	.indexTitle a {
+		float: right;
+		color: #FFFFFF;
+		font-size: small;
+		line-height: 48px;
 	}
 	
 	.indexSection {
-		width: 314px;
+		width: 45%;
 		margin-top: 6px;
 		display: inline-table;
 		margin-right: 2px;
+		margin-left:2.5%;
 	}
 	
 	.indexSection>h3 {
 		padding: 3px 5px;
 		font-size: medium;
-		height: 30px;
+		height: 48px;
+		padding-left: 18px;
+		font-weight: 300;
+
+		line-height: 44px;
 		width: 100%;
 		border-top: 1px solid #E8E8E8;
 		border-right: 1px solid #D3D3D3;
 		border-bottom: 1px solid #B2B2B2;
 		border-left: 1px solid #D3D3D3;
-		background: url(../../static/contbg.jpg) left top repeat-x;
+		background: linear-gradient( rgb(37, 137, 189), rgb(6, 109, 168));
+		color: #FFFFFF;
+		text-align: left;
 	}
 	
 	.indexSection>h3 span {
 		float: right;
-		color: #1D81B8;
-		font-size: xx-small;
-		line-height: 26px;
+		color: #FFFFFF;
+		font-size: small;
+		line-height: 44px;
 	}
 	
 	.indexSectionContent {
@@ -205,5 +239,14 @@
 		font-size: small;
 		line-height: 2em;
 		text-decoration: underline;
+	}
+
+	.demo-carousel img{
+		width: 100%;
+		height: 480px;
+	}
+
+	.ivu-timeline-item-content a{
+		font-size: 14px;
 	}
 </style>

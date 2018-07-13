@@ -22,21 +22,8 @@
 			</Form>
 		</section>
 		<section class="rightInfo">
-			<section class="rightInfoTable">
-				<section class="rightInfoTableImg">
-					<img src="../../static/suggest.gif" class="suggestImg" />
-				</section>
-				<section class="rightInfoTableText">
-					<h3 style="text-align: center;">Walsn中国（北京）代表处</h3>
-					<section style="padding-left: 15px;">
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-					</section>
-				</section>
+			<section class="rightInfoTable" v-html="sideBox.data">
+
 			</section>
 		</section>
 	</section>
@@ -53,7 +40,20 @@
 					phone: '',
 					note: '',
 				},
+				sideBox: {},
 			}
+		},
+		mounted(){
+			
+			this.$http.get("api/config/info?key=sidebox").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.sideBox = result.data;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
+			
 		},
 		methods: {
 			handleSubmit (name) {
@@ -87,11 +87,11 @@
 	}
 	
 	.leftTextarea {
-		width: 625px;
+		width: 65%;
 		display: inline-block;
 		vertical-align: top;
-		padding-left: 20px;
-		padding-top: 20px;
+		padding: 24px 128px;
+		min-height: 750px;
 	}
 	
 	.suggestImg {
@@ -101,21 +101,18 @@
 	}
 	
 	.rightInfo {
-		width: 330px;
+		width: 30%;
 		display: inline-block;
+		min-height: 750px;
 	}
 	
 	.rightInfoTable {
 		margin-left: 130px;
 		background-color: #eee;
-		width: 200px;
+		width: 320px;
 		float: right;
-		padding-bottom: 20%
-	}
-	
-	.rightInfoTableImg {
-		margin: 0px auto;
-		width: 170px;
+		padding-bottom: 20%;
+		min-height: 750px;
 	}
 	
 	.rightInfoTableText {

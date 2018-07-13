@@ -1,7 +1,7 @@
 <template>
 	<section style="width: 100%;">
 
-		<section class="leftTextarea"  style="padding:24px;">
+		<section class="leftTextarea">
 			<!-- <h1 class="newsCenter">{{title1}}</h1> -->
 			<h2 class="newsTitle">{{article.title}}</h2>
 			<br>
@@ -9,21 +9,8 @@
 		</section>
 
 		<section class="rightInfo">
-			<section class="rightInfoTable">
-				<section class="rightInfoTableImg">
-					<img src="../../static/suggest.gif" class="suggestImg" />
-				</section>
-				<section class="rightInfoTableText">
-					<h3 style="text-align: center;">Walsn中国（北京）代表处</h3>
-					<section style="padding-left: 15px;">
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-						<p>客服：400 800 3658</p>
-					</section>
-				</section>
+			<section class="rightInfoTable" v-html="sideBox.data">
+
 			</section>
 		</section>
 	</section>
@@ -37,11 +24,19 @@
 				article: {},
 				mapNavs: [],
 				title1: "",
+				sideBox: {},
 			}
 		},
 		mounted(){
 			
-
+			this.$http.get("api/config/info?key=sidebox").then((res) => {
+				var result = res.body;
+				if(result) {
+					this.sideBox = result.data;
+				} else {
+					this.$Message.error("网络异常");
+				}
+			});
 			
 			this.getArticle();
 		},
@@ -67,11 +62,11 @@
 <style scoped>
 	.newsCenter {
 		border-bottom: 1px solid #666666;
-		width: 625px;
+		width: 100%;
 		margin-bottom: 10px;
-		padding: 2px 0px;
+		padding: 2px px;
 		color: #627C19;
-		font-size: 16px;
+		font-size:20px;
 	}
 	
 	.newsTitle {
@@ -84,9 +79,11 @@
 	}
 	
 	.leftTextarea {
-		width: 625px;
+		width: 65%;
 		display: inline-block;
 		vertical-align: top;
+		padding: 24px 128px;
+		min-height: 750px;
 	}
 	
 	.suggestImg {
@@ -96,21 +93,18 @@
 	}
 	
 	.rightInfo {
-		width: 330px;
+		width: 30%;
 		display: inline-block;
+		min-height: 750px;
 	}
 	
 	.rightInfoTable {
 		margin-left: 130px;
 		background-color: #eee;
-		width: 200px;
+		width: 320px;
 		float: right;
-		padding-bottom: 20%
-	}
-	
-	.rightInfoTableImg {
-		margin: 0px auto;
-		width: 170px;
+		padding-bottom: 20%;
+		min-height: 750px;
 	}
 	
 	.rightInfoTableText {
