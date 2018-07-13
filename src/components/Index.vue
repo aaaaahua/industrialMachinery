@@ -1,6 +1,6 @@
 <template>
 	<div id="Index">
-		<Carousel  v-model="carouselIndex" loop radius-dot height="480">
+		<Carousel autoplay v-model="carouselIndex" loop radius-dot height="480">
 			<CarouselItem>
 				<div class="demo-carousel"><img src="../../static/Carousel1.jpg"></div>
 			</CarouselItem>
