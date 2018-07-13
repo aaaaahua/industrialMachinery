@@ -47,7 +47,7 @@
 			</div>
 		</section>
 		<section class="indexSection">
-			<h3>关于我们<router-link to="/article/18"><span>详情 >>&nbsp;</span></router-link></h3>
+			<h3>关于我们<router-link to="/article/30"><span>详情 >>&nbsp;</span></router-link></h3>
 			<div class="indexSectionContent" v-html="aboutMeArticle[0] ? aboutMeArticle[0].content : ''">
 			</div>
 		</section>
